@@ -1,0 +1,30 @@
+
+public class Node {
+	private int initPos, xPos, range;
+	boolean ret = false;
+
+	public Node(int xPos, int range){
+		this.xPos = xPos;
+		this.initPos = xPos;
+		this.range = range;
+	}
+	
+	public int currentPosition(){
+		System.out.println(xPos);
+		if(!ret){	
+			xPos++;
+			if(xPos>=range){
+				ret = true;
+			}
+		} 
+		if (ret){
+			xPos--;
+			if(xPos<=initPos-range){
+				ret = false;
+			}
+		}
+		return xPos;
+	}
+	
+	
+}

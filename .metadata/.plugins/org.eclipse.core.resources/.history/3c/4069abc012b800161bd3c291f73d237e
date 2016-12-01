@@ -1,0 +1,39 @@
+import java.awt.*;
+
+import javax.swing.JPanel;
+
+public class Graph extends JPanel {
+	int startPoint = 25;
+	int x = startPoint;
+	/*Node takes in two parameters: the starting position, and range */
+	Node testNode = new Node(200, 50);
+	Node testNode2 = new Node(400, 50);
+	
+	
+	
+	//int y = 1;
+
+	private Main3203 main;
+	
+	public Graph(Main3203 main){
+		this.main = main;
+	}
+	
+	
+	public void paint(Graphics g){
+		super.paintComponent(g);
+		g.drawLine(0, 275, 800, 275);
+		g.fillOval(testNode.updatePosition(), 250, 50, 50);
+		g.fillOval(testNode2.updatePosition(), 250, 50, 50);
+
+		//g.drawOval(x-25, 225, 100, 100);
+
+	}
+	
+	void Update(){
+		
+		repaint();
+
+	}
+}
+	

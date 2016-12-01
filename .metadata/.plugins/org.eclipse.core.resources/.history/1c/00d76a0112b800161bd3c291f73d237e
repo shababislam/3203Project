@@ -1,0 +1,29 @@
+
+public class Node {
+	private int initPos, xPos, range;
+	boolean ret = false;
+
+	public Node(int xPos, int range){
+		this.xPos = xPos;
+		this.initPos = xPos;
+		this.range = range;
+	}
+	
+	void Update(){
+		System.out.println(xPos);
+		if(!ret){	
+			x++;
+			if(x>=range){
+				ret = true;
+			}
+		} 
+		if (ret){
+			x--;
+			if(x<=initPos-range){
+				ret = false;
+			}
+		}
+	}
+	
+	
+}
