@@ -16,7 +16,7 @@ public class Main3203 extends JFrame{
 	};
 	
 	public void Update(){
-		updateTimer.scheduleAtFixedRate(task, 10,10);
+		updateTimer.scheduleAtFixedRate(task, 3,3);
 	}
 	
 	public static void main(String[] args) {
@@ -24,6 +24,7 @@ public class Main3203 extends JFrame{
 		while (true){
 			main.Update();
 		}
+
 	}
 
 	
