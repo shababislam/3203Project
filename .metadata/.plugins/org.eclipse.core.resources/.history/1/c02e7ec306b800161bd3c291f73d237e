@@ -1,0 +1,26 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Main3203 extends JFrame{
+
+	Graph g;
+	
+	public static void main(String[] args) {
+		new Main3203();
+	}
+	
+	
+	public Main3203(){
+		setSize(800,600);
+		setVisible(true);
+	}
+	
+	private void init(){
+		setLayout(new GridLayout(1,1,0,0));
+		g = new Graph();
+		add(g);
+		setVisible(true);
+		
+	}
+
+}

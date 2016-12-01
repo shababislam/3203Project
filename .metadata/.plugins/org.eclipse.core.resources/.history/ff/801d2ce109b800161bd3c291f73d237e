@@ -1,0 +1,19 @@
+import java.awt.*;
+
+import javax.swing.JPanel;
+
+public class Graph extends JPanel {
+	
+	public Graph(){
+		repaint();
+	}
+	
+	
+	public void paint(Graphics g){
+		g.drawLine(0, 300, 400, 300);
+		g.drawRect(100, 300, 50, 50);
+		
+	}
+	
+	
+}

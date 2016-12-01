@@ -1,0 +1,43 @@
+import java.awt.*;
+
+import javax.swing.JPanel;
+
+public class Graph extends JPanel {
+	
+	int x = 100;
+	//int y = 1;
+	boolean ret = false;
+
+	private Main3203 main;
+	
+	public Graph(Main3203 main){
+		this.main = main;
+	}
+	
+	
+	public void paint(Graphics g){
+		super.paintComponent(g);
+		g.drawLine(0, 275, 800, 275);
+		g.fillOval(x, 250, 50, 50);
+		
+	}
+	
+	void Update(){
+		System.out.println(x);
+		if(!ret){	
+			x++;
+			if(x>=700){
+				ret = true;
+			}
+		} 
+		if (ret){
+			x--;
+			if(x<=100){
+				ret = false;
+			}
+		}
+		repaint();
+
+	}
+}
+	

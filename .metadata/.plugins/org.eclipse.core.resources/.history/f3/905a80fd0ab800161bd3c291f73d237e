@@ -1,0 +1,16 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Main3203 extends JFrame{
+
+	
+	public static void main(String[] args) {
+		new Main3203();
+	}
+	
+	
+	public Main3203(){
+		setSize(800,600);
+		setVisible(true);
+	}
+}

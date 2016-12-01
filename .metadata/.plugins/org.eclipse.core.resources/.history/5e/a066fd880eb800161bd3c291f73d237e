@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+import java.util.Timer;
+public class Main3203 extends JFrame{
+
+	Graph g = new Graph(this);
+	
+	Timer updateTimer = new Timer();
+	TimerTask task = new TimerTask(){
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			g.Update();
+			
+		}
+	};
+	
+	public void Update(){
+		updateTimer.scheduleAtFixedRate(task, 100,100);
+	}
+	
+	public static void main(String[] args) {
+		Main3203 main = new Main3203();
+		while (true){
+			main.Update();
+		}
+	}
+
+	
+	public Main3203(){
+		setSize(800,600);
+		setVisible(true);
+		initialize();
+	}
+	
+	private void initialize(){
+		setLayout(new GridLayout(1,1,0,0));
+		g = new Graph(this);
+		add(g);
+		setVisible(true);
+		
+	}
+
+}
