@@ -19,7 +19,7 @@ public class Main3203 extends JFrame{
 		updateTimer.scheduleAtFixedRate(task, 10,10);
 	}
 	
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 		Main3203 main = new Main3203();
 		while (true){
 			main.Update();
