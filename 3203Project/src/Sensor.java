@@ -3,6 +3,9 @@ import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.InvalidParameterException;
 
 public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
@@ -24,7 +27,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		super();
 		if(pos > 1 || pos < 0) throw new InvalidParameterException("Position of Sensor has to be strictly between 0 and 1, inclusive.");
 		if(radius <= 0 ) throw new InvalidParameterException("Position of Sensor has to be strictly between 0 and 1, inclusive.");
-
+		pos = Sensor.round(pos, 2);
 		this.x = pos;
 		this.initialX = pos;
 		Sensor.radius = radius;
@@ -78,7 +81,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	{
 		if(pos < 0) return false;
 		if(pos > 1) return false;
-		this.x = pos;
+		this.x = Sensor.round(pos, 2);
 		return true;
 	}
 	
@@ -255,6 +258,20 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		for(int i = 0; i < Sensor.radius*100; i ++)
 			rad+= "=";
 		return "<" + rad + "("+this.getPos()+")" + rad + ">";
+	}
+	/**
+	 * this method will be used to normalize the position in to certain nember of decimal places. 
+	 * this would be 2 decimal places in our case;
+	 * @param value
+	 * @param places
+	 * @return
+	 */
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 	
 }

@@ -137,14 +137,11 @@ public class Simulator  implements Observer{
 		while(true)
 		{
 			direction = !direction;
-			if(distance != 1 && (s.getPos()!=0.0 || s.getPos() != 1.0))
-			{
 				if(direction) distance = 1.0-s.getMaxCoverage();
 				else distance = 1-s.getMinCoverage();
-			}
-			else distance = 1;
+			if(s.getPos() == 1.00 || s.getPos()==0.00) distance = 1;
 
-			while(s.canMove(distance, direction))
+			//while(s.canMove(distance, direction))
 			{
 				s.select();
 				try {
