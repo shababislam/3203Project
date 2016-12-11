@@ -12,7 +12,7 @@ public class Main {
         f.setSize(AreaComponent.MINWIDTH*2+40, AreaComponent.MINHEIGHT*2+40);
 		System.out.println("Frame Initialized...!");
 		Cpanel cp = new Cpanel();
-		Simulator s = new Simulator(5, 0.1, 100, 1,f);
+		Simulator s = new Simulator(6, 0.11, 100, 1,f);
 		System.out.println("Simulator Initialized...!");
 		AreaComponent a = new AreaComponent(s.getMethod1());
 		System.out.println("AreaComponenet Initialized...!");
@@ -33,7 +33,9 @@ public class Main {
         for(int i = 0; i< s.getMethod1().size(); i ++)
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));
 
-        s.run(); System.out.println("Simulation is done!");
+        //s.run();
+        s.Simple(s.getMethod1());
+        System.out.println("Simulation is done!");
         
         for(int i = 0; i< s.getMethod1().size(); i ++)
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));

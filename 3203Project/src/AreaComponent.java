@@ -31,11 +31,12 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 		this.resetSize();
 		Rectangle bounds = this.getBounds();
 		AreaComponent.gap = (int) (bounds.width * 0.1); // setting the gap to 10% of the width
+		if(AreaComponent.gap < 10) AreaComponent.gap = 25;
 		this.ruler = new Ruler(gap, bounds.width);
 		this.add(ruler);
 		this.addComponentListener(ruler);
 		//this.ruler.addComponentListener(this);
-		System.out.println("AreaComponenet(): " + "this.area.size: " + this.area.size());
+		//System.out.println("AreaComponenet(): " + "this.area.size: " + this.area.size());
 		bounds.width = 1000;
 		bounds.height = 200;
 		this.MaxHeight = bounds.height;
@@ -53,13 +54,9 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 	public void addNotify()
 	{
 		this.getParent().addComponentListener(this);
-		//this.readjustLayout();
 		this.resetSize();
 		this.ruler.resetSize();
 		this.repaint(this.getVisibleRect());
-		//this.ruler.addNotify();
-		//this.setChanged();
-		//this.notifyObservers(this);
 	}
 	
 	public void resetSize()
@@ -76,14 +73,14 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 		minSize = new Dimension(MINWIDTH, MINHEIGHT);
 		if(newSize.width < minSize.width) newSize.width = minSize.width;
 		if(newSize.height < minSize.height) newSize.height = minSize.height;
-		System.out.println("AreaComponent(): " + "newSize: "+newSize);
+		//System.out.println("AreaComponent(): " + "newSize: "+newSize);
 		//this.setSize(newSize);
 		//this.setMaximumSize(newSize);
 		this.setPreferredSize(minSize);//newSize);
 		this.setMinimumSize(minSize);
 		this.revalidate();
 		this.repaint(this.getVisibleRect());
-		if(this.getRootPane()!=null) System.out.println("AreaComponent(): " + "rootpane: "+this.getRootPane().getSize());
+		//if(this.getRootPane()!=null) System.out.println("AreaComponent(): " + "rootpane: "+this.getRootPane().getSize());
 
 	}
 	

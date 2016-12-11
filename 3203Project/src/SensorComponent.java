@@ -95,7 +95,7 @@ public class SensorComponent extends JComponent implements Observer,ComponentLis
 		newBound.x = this.ruler.getGap() + this.getStartPositionInPixels();
 		newBound.height = this.centerDiameter;
 		newBound.width = this.getRadiusInPixels()*2;
-		System.out.println("SensorComponenet(): " + "newBound: " + newBound);
+		//System.out.println("SensorComponenet(): " + "newBound: " + newBound);
 		this.setBounds(newBound);
 		if(this.getParent()!=null){
 			Parent.revalidate();

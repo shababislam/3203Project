@@ -28,9 +28,10 @@ public class Ruler extends JComponent implements ComponentListener {
 	@SuppressWarnings("unused")
 	private Ruler(){this(50, 800); }
 	public Ruler(int gap, int width){ this(gap, width, 20, 100); }
-	public Ruler(int gap, int width, int height, int scale)
+	public Ruler(int gap, int width, int height, int scale) throws IllegalArgumentException
 	{
 		super();
+		if(gap < 10) throw new IllegalArgumentException("Value of Gap has to be at least 10 Pixels, " + gap + " is too Small");
 		this.GapBeforeInPixels = gap;
 		this.GapAfterInPixels = gap;
 		this.MaxLengthInPixels = width;
@@ -43,7 +44,7 @@ public class Ruler extends JComponent implements ComponentListener {
 	}
 	public void addNotify()
 	{
-		System.out.println("Ruler.addNotify() " + this.getParent().getInsets());
+		//System.out.println("Ruler.addNotify() " + this.getParent().getInsets());
 		this.resetSize();
 		this.revalidate();
 		this.repaint(this.getVisibleRect());
@@ -108,7 +109,7 @@ public class Ruler extends JComponent implements ComponentListener {
 		}
 		if(newSize.width < minSize.width) newSize.width = minSize.width;
 		if(newSize.height < minSize.height) newSize.height = minSize.height;
-		System.out.println("Ruler(): " + "ParentSize: "+parentSize);
+		//System.out.println("Ruler(): " + "ParentSize: "+parentSize);
 		Rectangle newBounds = new Rectangle(0, parentSize.height-this.MaxHeight, parentSize.width, this.MaxHeight);
 		this.setBounds(newBounds);
 		//System.out.println("Ruler(): " + "newBounds: "+newBounds);
@@ -131,7 +132,7 @@ public class Ruler extends JComponent implements ComponentListener {
 		super.paintComponent(g);
 		int gap = this.GapBeforeInPixels;
 		int unit = this.MaxLengthInPixels/100;
-		//System.out.println("Ruler(): " + "gap: "+gap + "\tunit: " + unit + "\t g:" + g);
+		System.out.println("Ruler(): " + "gap: "+gap + "\tunit: " + unit + "\t g:" + g);
 		int unitLength = this.MaxHeight / 3;
 		int unitTickness = 1;
 		int unitHalfTenthLength = this.MaxHeight / 2;

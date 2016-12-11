@@ -52,78 +52,53 @@ public class Simulator  implements Observer{
 	@SuppressWarnings("unused")
 	public void Simple(Area a)
 	{
+		long delay = 200;
+		double prevMaxCoverage = 0.0;
+		double distance = 0.0; // distance that a sensor can move; to be calculated;
+		double overlapAllowance = 0.0;
+		boolean allowOverlap = true;
+		boolean direction = LEFT;
 		if(a.size() == 0)
 		{
 			System.out.println("Error: EmptyArray");
 			return;
 		}
+		if(a.size()*a.get(0).getCoverageLength() > 1)
+		{
+			allowOverlap = true;
+			overlapAllowance = ( (1.0 - a.size()*a.get(0).getCoverageLength() )/a.size()) /2;
+		}
+		else
+			allowOverlap = false;
+		
 		//checking the coverage by the left most element; and removing the initial gap;
-		if(a.get(0).getMinCoverage() > 0)
+		try { TimeUnit.MILLISECONDS.sleep(5*delay); } 
+		catch (InterruptedException e) { e.printStackTrace(); }
+		
+		for(int i = 0; i < a.size(); i ++) // going from left to right
 		{
-			a.get(0).select();
-			while(a.get(0).getMinCoverage() > 0)
-				a.get(0).move(UNITMOVE, LEFT);
-			a.get(0).deselect();
-		}
-		//checking the coverage by the right most element; and removing the final gap;
-		if(a.size() > 1)
-		if(a.get(a.size()-1).getMaxCoverage() < 1)
-		{
-			a.get(a.size()-1).select();
-			while(a.get(a.size()-1).getMaxCoverage() < 1)
-				a.get(a.size()-1).move(UNITMOVE, RIGHT);
-			a.get(a.size()-1).deselect();
-		}
-		double ol = 2, maxMoveAllowanceToRight = -1, maxMoveAllowanceToLeft = -1;
-		//checking every other element except for first and last one
-		Sensor left, center, right;
-		if(a.size() >2)
-			for(int i = 1; i < a.size()-1; i++)
-			{
-				left = a.get(i-1);
-				center = a.get(i);
-				right = a.get(i+1);
-				center.select();
-				
-				ol = center.getOverlap(left);
-/*				if(ol < 0) // has gap
-				{
-					maxMoveAllowanceToLeft = Math.abs(ol);
-				}
-				else
-					maxMoveAllowanceToLeft = 0;
-
-				ol = center.getOverlap(right);
-				if(ol < 0) //  gap between
-				{
-					maxMoveAllowanceToRight = Math.abs(ol);
-				}
-				else
-					maxMoveAllowanceToRight = 0;
-*/
-				try {
-					TimeUnit.MILLISECONDS.sleep(333);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(ol < 0)
-					center.move(Math.abs(ol), LEFT);
-				try {
-					TimeUnit.MILLISECONDS.sleep(333);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}				
-				center.deselect();
-				try {
-					TimeUnit.MILLISECONDS.sleep(334);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+			direction = LEFT; // assuming moving direction is to left
+			a.get(i).select();
+			try { TimeUnit.MILLISECONDS.sleep(delay); } 
+			catch (InterruptedException e) { e.printStackTrace(); }
+			
+			if(a.get(i).getMinCoverage() > prevMaxCoverage-overlapAllowance){ //checking if there is a gap;
+				distance = Math.abs( a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance) );
+				direction = LEFT;
 			}
+			if(a.get(i).getMinCoverage() < prevMaxCoverage-overlapAllowance){ //checking if there is a overlap;
+				distance = Math.abs( a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance) );
+				direction = RIGHT;
+			}
+
+			if(a.get(i).canMove(distance, direction))
+				a.get(i).motionMove(distance, direction);
+			prevMaxCoverage = a.get(i).getMaxCoverage();
+			a.get(i).deselect();
+			try { TimeUnit.MILLISECONDS.sleep(delay); } 
+			catch (InterruptedException e) { e.printStackTrace(); }
+		}
+		System.out.println("Simple Coverage: " + a.size() + " Sensors with Radius of " +a.get(0).getRadius()+ ", costs "+ a.getMovingCost() + " units of distance for full coverage");
 	}
 	public void run()
 	{

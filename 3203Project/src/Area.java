@@ -79,6 +79,14 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 		return this.length;
 	}
 	
+	public double getMovingCost()
+	{
+		double cost = 0.0;
+		for( int i = 0; i < size(); i ++)
+			cost += get(i).getCost();
+		return cost;
+	}
+	
 	/**
 	 * this is to check if the area is full and cannot accept anymore sensors
 	 * @return boolean, true if this area is full
