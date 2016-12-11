@@ -1,9 +1,12 @@
 
 import java.util.Observable;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JComponent;
 import java.security.InvalidParameterException;
 
 public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
+	public static final double UNITMOVE = 0.01;
 	private double x; // keeps track of x position
 	private double initialX; // to keep track of the initial position of this sensor for calculating cost
 	private boolean selected;
@@ -79,8 +82,8 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		return true;
 	}
 	
-	public void select(){this.selected = true; this.setChanged();this.notifyObservers("selected");}
-	public void deselect(){this.selected = false; this.setChanged();this.notifyObservers("selected");}
+	public void select(){this.selected = true; this.updateObservers(this, "selected"); }
+	public void deselect(){this.selected = false; this.updateObservers(this, "selected"); }
 	public boolean isSelected(){ return this.selected;}
 	
 	/**
@@ -194,6 +197,22 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		if(!left && this.getPos()+distance <=1) return true;
 		return false;	
 	}
+	public boolean motionMove(double distance, boolean left)
+	{
+		int steps = (int)(distance/UNITMOVE);
+		boolean res = false;
+		for(int i = 0; i < steps; i++)
+		{
+			try {
+				TimeUnit.MILLISECONDS.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			res &= this.move(UNITMOVE, left);
+		}
+		return res;
+	}
 	public boolean move(double distance, boolean left)
 	{
 		//double distance = units * Sensor.unit;
@@ -201,13 +220,12 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		if(left){
 			this.setPos(this.getPos()-distance); 
 			this.updateObservers(this, "moved");
-			return true;
 		}
 		else{ // if !left
 			this.setPos(this.getPos()+distance); 
 			this.updateObservers(this, "moved");
-			return true;
 		}
+		return true;
 	}
 	/**
 	 * calculates and returns the number of units that this sensor have moved since it was constructed;

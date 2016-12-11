@@ -71,15 +71,15 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 			parentSize = this.getParent().getBounds(); 
 		}
 		newSize = new Dimension(parentSize.width, this.MaxHeight);
-		Rectangle newBounds = new Rectangle(0, parentSize.height-this.MaxHeight, parentSize.width, this.MaxHeight);
-		this.setBounds(newBounds);
-		minSize = new Dimension(400, this.MaxHeight);
+		//Rectangle newBounds = new Rectangle(0, parentSize.height-this.MaxHeight, parentSize.width, this.MaxHeight);
+		//this.setBounds(newBounds);
+		minSize = new Dimension(MINWIDTH, MINHEIGHT);
 		if(newSize.width < minSize.width) newSize.width = minSize.width;
 		if(newSize.height < minSize.height) newSize.height = minSize.height;
 		System.out.println("AreaComponent(): " + "newSize: "+newSize);
-		this.setSize(newSize);
-		this.setMaximumSize(newSize);
-		this.setPreferredSize(newSize);
+		//this.setSize(newSize);
+		//this.setMaximumSize(newSize);
+		this.setPreferredSize(minSize);//newSize);
 		this.setMinimumSize(minSize);
 		this.revalidate();
 		this.repaint(this.getVisibleRect());

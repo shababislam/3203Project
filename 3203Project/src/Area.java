@@ -221,7 +221,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 			{
 				if(((ObservableObject)arg).message.equals("moved"))
 				{
-					sort();
+					//sort();
 				}
 				//moved these out of moved condition so if it is selected for instance, it still would update
 				message = ((ObservableObject)arg).message;

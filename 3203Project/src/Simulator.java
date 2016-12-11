@@ -30,7 +30,7 @@ public class Simulator  implements Observer{
 		this.frame = f;
 		System.out.println("Simulator Object: initial Sensor has been Initialized...!");
 		//Null.move(0.0, true);
-		this.method1.add(Null);
+		//this.method1.add(Null);
 
 		for(int i  = 0; i < numSensors; i ++){
 			added = false;
@@ -42,6 +42,7 @@ public class Simulator  implements Observer{
 				if(added) System.out.println("Simulator Object: a Sensor has been Initialized and added at position " + pos);
 				else System.out.println("Simulator Object: Sensor could not be added at position " + pos);
 				// making 3 copies for separate simulations;
+				this.method1.add(new Sensor(pos));
 				this.method2.add(new Sensor(pos));
 			}
 		}
@@ -130,12 +131,21 @@ public class Simulator  implements Observer{
 		boolean direction = LEFT;
 		Sensor s = this.method1.get(0);
 		//s.setPos(0.5);
-		Sensor s1 = new Sensor(0.565);
-		this.method1.add(s1);
+		//Sensor s1 = new Sensor(0.565);
+		//this.method1.add(s1);
+		double distance = 0;
 		while(true)
 		{
 			direction = !direction;
-			while(s.canMove(UNITMOVE, direction)){
+			if(distance != 1 && (s.getPos()!=0.0 || s.getPos() != 1.0))
+			{
+				if(direction) distance = 1.0-s.getMaxCoverage();
+				else distance = 1-s.getMinCoverage();
+			}
+			else distance = 1;
+
+			while(s.canMove(distance, direction))
+			{
 				s.select();
 				try {
 					TimeUnit.MILLISECONDS.sleep(delay);
@@ -143,8 +153,7 @@ public class Simulator  implements Observer{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				s.move(UNITMOVE, direction);
+				s.motionMove(distance, direction);
 				//System.out.println("Simulator.run(): " + s);
 				try {
 					TimeUnit.MILLISECONDS.sleep(delay);
