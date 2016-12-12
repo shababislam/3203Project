@@ -19,10 +19,12 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	private static int scale = 100; // to keep track of the scale ***** may render unnecessary later
 	private static double overlapTollorance = 1.0; //in terms of units
 	private static double unit = 10.0; //scale divide by Unit would result int 100 units in default scale ***** this also May render Useless
+	private int ID; // identification number for gui debugging
 	
-	public Sensor(){this(0,1,1000, 10.0, 1);}
-	public Sensor(double pos) { this(pos, Sensor.radius, Sensor.scale, Sensor.unit, Sensor.overlapTollorance); }
-	public Sensor(double pos, double radius, int scale, double unit, double tollorance) throws InvalidParameterException
+	public Sensor(){ this(0,1,1000, 10.0, 1, 0);}
+	public Sensor(double pos){ this(pos,0); }
+	public Sensor(double pos, int id) { this(pos, Sensor.radius, Sensor.scale, Sensor.unit, Sensor.overlapTollorance, id); }
+	public Sensor(double pos, double radius, int scale, double unit, double tollorance, int id) throws InvalidParameterException
 	{
 		super();
 		if(pos > 1 || pos < 0) throw new InvalidParameterException("Position of Sensor has to be strictly between 0 and 1, inclusive.");
@@ -37,12 +39,13 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		this.selected = false;
 		this.lockPosition = false;
 		this.component = null;
+		this.ID = id; // setting the inputed ID#
 		
 	}
 	@Override
 	public Object clone()
 	{
-		Sensor newSensor = new Sensor(this.getPos(), this.getRadius(), Sensor.getScale(), Sensor.unit, Sensor.overlapTollorance);
+		Sensor newSensor = new Sensor(this.getPos(), this.getRadius(), Sensor.getScale(), Sensor.unit, Sensor.overlapTollorance, this.ID);
 		newSensor.initialX = this.initialX;
 		return (Object)newSensor;		
 	}
@@ -223,7 +226,8 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	public boolean motionMove(double distance, boolean left)
 	{
 		int steps = (int)(distance/UNITMOVE);
-		boolean res = false;
+		boolean res = true;
+		System.out.print("Sensor.motionMove(): Initial Pos: " + this.getPos());
 		for(int i = 0; i < steps; i++)
 		{
 			try {
@@ -234,6 +238,9 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 			}
 			res &= this.move(UNITMOVE, left);
 		}
+		System.out.print(" Final Pos: " + this.getPos());
+		if(res) System.out.println(" Susess!");
+		else System.out.println(" Fail");
 		return res;
 	}
 	public boolean move(double distance, boolean left)
@@ -277,7 +284,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		String rad = "";
 		for(int i = 0; i < Sensor.radius*100; i ++)
 			rad+= "=";
-		return "<" + rad + "("+this.getPos()+")" + rad + ">";
+		return "<" + rad + "("+this.getPos()+")" + rad + "> ID: " + this.ID;
 	}
 	/**
 	 * this method will be used to normalize the position in to certain nember of decimal places. 

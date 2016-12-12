@@ -44,7 +44,7 @@ public class Ruler extends JComponent implements ComponentListener {
 	}
 	public void addNotify()
 	{
-		//System.out.println("Ruler.addNotify() " + this.getParent().getInsets());
+		////System.out.println("Ruler.addNotify() " + this.getParent().getInsets());
 		this.resetSize();
 		this.revalidate();
 		this.repaint(this.getVisibleRect());
@@ -109,10 +109,10 @@ public class Ruler extends JComponent implements ComponentListener {
 		}
 		if(newSize.width < minSize.width) newSize.width = minSize.width;
 		if(newSize.height < minSize.height) newSize.height = minSize.height;
-		//System.out.println("Ruler(): " + "ParentSize: "+parentSize);
+		////System.out.println("Ruler(): " + "ParentSize: "+parentSize);
 		Rectangle newBounds = new Rectangle(0, parentSize.height-this.MaxHeight, parentSize.width, this.MaxHeight);
 		this.setBounds(newBounds);
-		//System.out.println("Ruler(): " + "newBounds: "+newBounds);
+		////System.out.println("Ruler(): " + "newBounds: "+newBounds);
 		this.setSize(newSize);
 		this.setMaximumSize(newSize);
 		this.setPreferredSize(newSize);
@@ -132,7 +132,7 @@ public class Ruler extends JComponent implements ComponentListener {
 		super.paintComponent(g);
 		int gap = this.GapBeforeInPixels;
 		int unit = this.MaxLengthInPixels/100;
-		System.out.println("Ruler(): " + "gap: "+gap + "\tunit: " + unit + "\t g:" + g);
+		//System.out.println("Ruler(): " + "gap: "+gap + "\tunit: " + unit + "\t g:" + g);
 		int unitLength = this.MaxHeight / 3;
 		int unitTickness = 1;
 		int unitHalfTenthLength = this.MaxHeight / 2;

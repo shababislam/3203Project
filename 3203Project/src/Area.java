@@ -92,7 +92,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 	 * this is to check if the area is full and cannot accept anymore sensors
 	 * @return boolean, true if this area is full
 	 */
-	public boolean isFull() { return this.length >= Area.maxLength; }
+	public boolean isFull() { if(this.size() == 0) return false; this.calculateLength(); return this.length >= Area.maxLength; }
 	/**
 	 * return s the element at index i
 	 * @param i
@@ -122,6 +122,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 			s.addObserver(this);
 			this.sort();
 			updateObservers(this, s, "NewSensor");
+
 		}
 		return res;
 		
@@ -230,7 +231,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 			{
 				if(((ObservableObject)arg).message.equals("moved"))
 				{
-					sort();
+					//sort();
 				}
 				//moved these out of moved condition so if it is selected for instance, it still would update
 				message = ((ObservableObject)arg).message;

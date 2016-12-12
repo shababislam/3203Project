@@ -14,6 +14,10 @@ public class Simulator  implements Observer{
 	{
 		this(100, 5, 100, 1, null);
 	}
+	public Simulator(int numSensors, int scale, int unit, JFrame f)
+	{
+		this(numSensors, 1.0/numSensors, scale,unit,f);
+	}
 	public Simulator(int numSensors, double radius, int scale, int unit, JFrame f)
 	{
 		this.initialState = new Area();
@@ -25,7 +29,7 @@ public class Simulator  implements Observer{
 		double pos = 0;
 		boolean added  = false;
 		Random r = new Random();
-		Sensor Null = (new Sensor(pos, radius, scale, unit, 1)); // to initialize class variables
+		Sensor Null = (new Sensor(pos, radius, scale, unit, 1, 0)); // to initialize class variables
 		Sensor s;
 		this.frame = f;
 		System.out.println("Simulator Object: initial Sensor has been Initialized...!");
@@ -36,14 +40,14 @@ public class Simulator  implements Observer{
 			added = false;
 			while(!added && !initialState.isFull()){
 				pos = r.nextFloat();
-				s = new Sensor(pos);
+				s = new Sensor(pos, i);
 				System.out.println("Simulator Object: new Position is: " + pos + " == " + s.getPos());
 				added = this.initialState.add(s);
 				if(added) System.out.println("Simulator Object: a Sensor has been Initialized and added at position " + pos);
 				else System.out.println("Simulator Object: Sensor could not be added at position " + pos);
 				// making 3 copies for separate simulations;
-				this.method1.add(new Sensor(pos));
-				this.method2.add(new Sensor(pos));
+				this.method1.add(new Sensor(pos, i));
+				this.method2.add(new Sensor(pos, i));
 			}
 		}
 	}
@@ -92,7 +96,10 @@ public class Simulator  implements Observer{
 			}
 
 			if(a.get(i).canMove(distance, direction))
+			{
 				a.get(i).motionMove(distance, direction);
+				System.out.println("Simulator.Simple(): Sensor[" + i + "] moved");
+			}
 			prevMaxCoverage = a.get(i).getMaxCoverage();
 			a.get(i).deselect();
 			try { TimeUnit.MILLISECONDS.sleep(delay); } 
