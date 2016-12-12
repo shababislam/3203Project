@@ -155,9 +155,29 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		return true;
 	}
 	/**
+	 * checks if the given position falls in coverage of this sensor
+	 * @param position
+	 * @return true if position is covered, false otherwise
+	 */
+	public boolean covers(double position){ return this.getMinCoverage() >= position && this.getMaxCoverage() <= position; }
+	/**
+	 * returns the distance this sensor needs to move to cover the given position within the boundaries of its minimum coverage.
+	 * this sensor needs to move Left if the value is positive, and move Right if negative
+	 * @param position
+	 * @return double distance
+	 */
+	public double minCoverageDistance(double position){return this.getMinCoverage()-position; }
+	/**
+	 * returns the distance this sensor needs to move to cover the given position within the boundaries of its maximum coverage.
+	 * this sensor needs to move Left if the value is positive, and move Right if negative
+	 * @param position
+	 * @return double distance
+	 */
+	public double maxCoverageDistance(double position){return this.getMaxCoverage()-position; }
+	/**
 	 * checks if the signal of the two sensors reach each other and returns true; returns false otherwise
 	 * @param other
-	 * @return
+	 * @return true if this sensor reaches the signal of the other sensor (overlaps or touches)
 	 */
 	public boolean reaches(Sensor other)
 	{

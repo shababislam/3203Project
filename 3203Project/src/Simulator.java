@@ -63,10 +63,10 @@ public class Simulator  implements Observer{
 			System.out.println("Error: EmptyArray");
 			return;
 		}
-		if(a.size()*a.get(0).getCoverageLength() > 1)
+		if(a.getPureLength() > 1)
 		{
 			allowOverlap = true;
-			overlapAllowance = ( (1.0 - a.size()*a.get(0).getCoverageLength() )/a.size()) /2;
+			overlapAllowance = ( (1.0 - a.getPureLength() )/a.size()) /2;
 		}
 		else
 			allowOverlap = false;
