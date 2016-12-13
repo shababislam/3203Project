@@ -161,7 +161,8 @@ public class Simulator  implements Observer{
 			try { TimeUnit.MILLISECONDS.sleep(delay); } 
 			catch (InterruptedException e) { e.printStackTrace(); }
 			
-			if(a.get(i).getMinCoverage() > prevMaxCoverage-overlapAllowance){ //checking if there is a gap;
+			/*
+			if(a.get(i).getMinCoverage() > prevMaxCoverage){ //checking if there is a gap;
 				distance = a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance);
 				if(distance < 0 ) distance = 0;
 				direction = LEFT;
@@ -170,11 +171,11 @@ public class Simulator  implements Observer{
 				distance = Math.abs( a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance) );
 				direction = RIGHT;
 			}
-
-			if(a.get(i).canMove(distance, direction))
+			*/
+			if(a.get(i).canMoveTo(prevMaxCoverage+a.get(i).getRadius()) )
 			{
-				a.get(i).motionMove(distance, direction);
-				System.out.println("Simulator.Simple(): Sensor[" + i + "] moved");
+				a.get(i).motionMoveTo(prevMaxCoverage+a.get(i).getRadius());
+				System.out.println("Simulator.Rigid(): Sensor[" + i + "] moved");
 			}
 			prevMaxCoverage = a.get(i).getMaxCoverage();
 			a.get(i).deselect();
@@ -182,7 +183,7 @@ public class Simulator  implements Observer{
 			catch (InterruptedException e) { e.printStackTrace(); }
 			if(i == a.size()-1 && prevMaxCoverage > a.getMaxLength()) break;
 		}
-		System.out.println("Simple Coverage: " + a.size() + " Sensors with Radius of " +a.get(0).getRadius()+ ", costs "+ a.getMovingCost() + " units of distance for full coverage");
+		System.out.println("Rigid Coverage: " + a.size() + " Sensors with Radius of " +a.get(0).getRadius()+ ", costs "+ a.getMovingCost() + " units of distance for full coverage");
 	}
 	public void run()
 	{
