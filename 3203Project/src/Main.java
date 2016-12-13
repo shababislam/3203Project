@@ -41,9 +41,16 @@ public class Main {
         
         for(int i = 0; i< s.getMethod1().size(); i ++)
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));
+        
+        SaveCSV.addAreaCSVData(s.getMethod1(), "Simple");
+        SaveCSV.setFilenameGui(f);
+        SaveCSV.SaveData();
+        
 	}
 
+
 }
+
 
 /**
  *  Class Sensor (compeleted)

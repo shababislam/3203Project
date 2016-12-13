@@ -1,13 +1,70 @@
+import java.awt.Component;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SaveCSV {
+	private static String filename;
+	private static String fileData;
+	private static final String EXTENSION = ".csv";
+	private static final char NL = '\n';
+	
+	public SaveCSV(){ SaveCSV.filename = "outputData";  this.fileData = "";}
 
+	public static void setFilename(String file)
+	{
+		if(file.toLowerCase().contains(EXTENSION)) file.toLowerCase().replaceAll(EXTENSION, "");
+		SaveCSV.filename = file;
+	}
+	public static String getFilename(){ return SaveCSV.filename; }
+	
+	public static void setFilenameGui(Component parent)
+	{
+	    JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "JPG & GIF Images", "jpg", "gif");
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showSaveDialog(parent);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	       System.out.println("You chose to open this file: " +
+	            chooser.getSelectedFile().getName());
+	    }
 
-	public String CSVHeaderGen(){
-	 return "Initial Position,Final Position,Radius,Distance Moved,Algorithm,Initial Overlap,Final Overlap,Initial Gap,Final Gap";
+	}
+	
+	public static void addAreaCSVData(Area thisArea, String algorithm)
+	{
+		if(fileData == "") fileData = SaveCSV.CSVHeaderGen();
+		fileData += SaveCSV.areaCSVData(thisArea, algorithm);
+	}
+	
+	public static boolean SaveData()
+	{
+		boolean res = true;
+		String fName = new String(filename);
+		if(!filename.toLowerCase().contains(EXTENSION)) fName += EXTENSION;
+		try{
+		    PrintWriter writer = new PrintWriter(fName, "UTF-8");
+		    writer.println(fileData);
+		    writer.close();
+		} catch (IOException e) {
+			res = false;
+			e.printStackTrace();
+		   // do something
+		}
+		
+		return res;
+	}
+	
+	private static String CSVHeaderGen(){
+	 return "Initial Position,Final Position,Radius,Distance Moved,Algorithm,Initial Overlap,Final Overlap,Initial Gap,Final Gap" + NL;
 	}
 	
 	
-	public String areaCSVData(Area thisArea, String algorithm){
+	private static String areaCSVData(Area thisArea, String algorithm){
 		String initPos = "";
 		String finalPos = "";
 		String radius = "";
@@ -45,13 +102,8 @@ public class SaveCSV {
 	    }
 		
 		
-		return '"'+initPos+'"'+','+'"'+finalPos+'"'+','+radius+','+distanceMoved+','+algorithm+','+initialOverlap+','+finalOverlap+','+initialGap+','+finalGap;
+		return '"'+initPos+'"'+','+'"'+finalPos+'"'+','+radius+','+distanceMoved+','+algorithm+','+initialOverlap+','+finalOverlap+','+initialGap+','+finalGap+NL;
 	}
 	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }
