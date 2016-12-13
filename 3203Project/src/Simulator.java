@@ -173,7 +173,7 @@ public class Simulator  implements Observer{
 			if(i == a.size()-1 && prevMaxCoverage > a.getMaxLength()) break;
 		}
 		System.out.println("Rigid Coverage: " + a.size() + " Sensors with Radius of " +a.get(0).getRadius()+ ", costs "+ a.getMovingCost() + " units of distance for full coverage");
-	}
+	} 
 	public void run()
 	{
 		long delay = 100;

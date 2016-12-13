@@ -49,7 +49,7 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 			System.out.println("AreaComponenet(): [" + i + "] " + this.area.get(i).getComponent());
 		}
 		
-	}
+	} 
 	
 	public void addNotify()
 	{

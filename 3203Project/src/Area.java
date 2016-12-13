@@ -127,7 +127,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 		return res;
 		
 	}
-	
+	 
 	/**
 	 * implementation of addAll() for this container, it would only add elements if all elements are acceptable
 	 */

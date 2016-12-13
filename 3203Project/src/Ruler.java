@@ -126,7 +126,7 @@ public class Ruler extends JComponent implements ComponentListener {
 	}
 	
 	public void paintComponent(Graphics g)
-	{
+	{ 
 		g.clearRect(this.getVisibleRect().x, this.getVisibleRect().y, this.getVisibleRect().width, this.getVisibleRect().height);
 		this.resetSize();
 		super.paintComponent(g);
