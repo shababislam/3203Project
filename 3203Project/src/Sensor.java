@@ -10,6 +10,8 @@ import java.security.InvalidParameterException;
 
 public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	public static final double UNITMOVE = 0.01;
+	public static final boolean LEFT = true;
+	public static final boolean RIGHT = false;
 	private double x; // keeps track of x position
 	private double initialX; // to keep track of the initial position of this sensor for calculating cost
 	private boolean selected;
@@ -80,6 +82,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	 * @return int x
 	 */
 	public double getPos(){ return this.x; }
+	public double getInitialPos() { return this.initialX; }
 	public boolean setPos(double pos) 
 	{
 		if(pos < 0) return false;
@@ -228,6 +231,14 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		if(left && this.getPos()-distance >=0) return true;
 		if(!left && this.getPos()+distance <=1) return true;
 		return false;	
+	}
+	public boolean motionMoveTo(double pos)
+	{
+		double distance  = this.getPos() - pos;
+		boolean direction  = LEFT;
+		if(distance < 0) direction  = RIGHT;
+		return motionMove(distance, direction);
+		
 	}
 	public boolean motionMove(double distance, boolean left)
 	{
