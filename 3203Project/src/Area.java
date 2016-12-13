@@ -9,7 +9,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 	private double purelength; // calculated length regardless of overlaps and gaps;
 	private double length; // calculates the length, subtracted by overlaps but not gaps;
 	private ArrayList<Sensor> path; // to keep the list of Sensors
-	private static final double maxLength = 1.0; // maximum distance of this Area that can be covered
+	public static final double maxLength = 1.0; // maximum distance of this Area that can be covered
 	
 	public Area()
 	{

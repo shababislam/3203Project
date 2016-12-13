@@ -102,6 +102,12 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	 * @return
 	 */
 	public static int getScale(){ return scale; }
+	
+	/**
+	 * this method is only for debugging purposes;
+	 * @return
+	 */
+	public int getID(){ return this.ID; }
 	/**
 	 * returns the length of coverage of this sensor
 	 * which will be interpreted as 2*this.getRadious()
@@ -112,12 +118,12 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	 * returns the minimum position that this sensor can cover
 	 * @return double position < x
 	 */
-	public double getMinCoverage(){ return this.getPos() - this.getRadius(); }
+	public double getMinCoverage(){ return round(this.getPos() - this.getRadius(),2); }
 	/**
 	 * returns the maximum position that this sensor can cover
 	 * @return double position > x
 	 */
-	public double getMaxCoverage(){ return this.getPos() + this.getRadius(); }
+	public double getMaxCoverage(){ return round(this.getPos() + this.getRadius(),2); }
 	/**
 	 * compares this sensor with another sensor, and returns true if this == other or they both have same x position and radius
 	 * @param other
@@ -162,7 +168,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	 * @param position
 	 * @return true if position is covered, false otherwise
 	 */
-	public boolean covers(double position){ return this.getMinCoverage() >= position && this.getMaxCoverage() <= position; }
+	public boolean covers(double position){ return this.getMinCoverage() <= position && this.getMaxCoverage() >= position; }
 	/**
 	 * returns the distance this sensor needs to move to cover the given position within the boundaries of its minimum coverage.
 	 * this sensor needs to move Left if the value is positive, and move Right if negative
@@ -227,7 +233,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	{
 		int steps = (int)(distance/UNITMOVE);
 		boolean res = true;
-		System.out.print("Sensor.motionMove(): Initial Pos: " + this.getPos());
+		System.out.print("Sensor.motionMove(): ["+this.getID()+"] Initial Pos: " + this.getPos());
 		for(int i = 0; i < steps; i++)
 		{
 			try {
@@ -284,7 +290,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		String rad = "";
 		for(int i = 0; i < Sensor.radius*100; i ++)
 			rad+= "=";
-		return "<" + rad + "("+this.getPos()+")" + rad + "> ID: " + this.ID;
+		return "("+this.getMinCoverage()+")<" + rad + "("+this.getPos()+")" + rad + ">("+this.getMaxCoverage()+") ID: " + this.ID;
 	}
 	/**
 	 * this method will be used to normalize the position in to certain nember of decimal places. 

@@ -18,6 +18,32 @@ public class Simulator  implements Observer{
 	{
 		this(numSensors, 1.0/numSensors, scale,unit,f);
 	}
+	public Simulator(double[] sensors, double radius, int scale, int unit, JFrame f)
+	{
+		this.initialState = new Area();
+		this.initialState.addObserver(this);
+		this.method1 = new Area();
+		this.method1.addObserver(this);
+		double pos = 0;
+		boolean added  = false;
+		//Random r = new Random();
+		Sensor Null = (new Sensor(pos, radius, scale, unit, 1, 0)); // to initialize class variables
+		Sensor s;
+		this.frame = f;
+
+		for(int i  = 0; i < sensors.length ; i ++){
+			added = false;
+			{
+				pos = sensors[i];
+				s = new Sensor(pos, i);
+				System.out.println("Simulator Object: new Position is: " + pos + " == " + s.getPos());
+				added = this.initialState.add(s);
+				if(added) System.out.println("Simulator Object: a Sensor has been Initialized and added at position " + pos);
+				else System.out.println("Simulator Object: Sensor could not be added at position " + pos);
+				this.method1.add(new Sensor(pos, i));
+			}
+		}
+	}
 	public Simulator(int numSensors, double radius, int scale, int unit, JFrame f)
 	{
 		this.initialState = new Area();
@@ -67,13 +93,62 @@ public class Simulator  implements Observer{
 			System.out.println("Error: EmptyArray");
 			return;
 		}
-		if(a.getPureLength() > 1)
+//		if(a.getPureLength() > 1)
+//		{
+//			allowOverlap = true;
+//			overlapAllowance = ( (1.0 - a.getPureLength() )/a.size()) /2;
+//		}
+//		else
+//			allowOverlap = false;
+		
+		//checking the coverage by the left most element; and removing the initial gap;
+		try { TimeUnit.MILLISECONDS.sleep(5*delay); } 
+		catch (InterruptedException e) { e.printStackTrace(); }
+		
+		for(int i = 0; i < a.size(); i ++) // going from left to right
 		{
-			allowOverlap = true;
-			overlapAllowance = ( (1.0 - a.getPureLength() )/a.size()) /2;
+			direction = LEFT; // assuming moving direction is to left
+			a.get(i).select();
+			try { TimeUnit.MILLISECONDS.sleep(delay); } 
+			catch (InterruptedException e) { e.printStackTrace(); }
+			if(!a.get(i).covers(prevMaxCoverage)){
+				if(a.get(i).getMinCoverage() > prevMaxCoverage){ //checking if there is a gap;
+					distance = a.get(i).getMinCoverage() - (prevMaxCoverage);
+					if(distance < 0 ) distance = 0;
+					direction = LEFT;
+				}
+				if(a.get(i).getMinCoverage() < prevMaxCoverage-overlapAllowance){ //checking if there is a overlap;
+					distance = Math.abs( a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance) );
+					direction = RIGHT;
+				}
+			}
+			else distance = 0.0;
+
+			if(a.get(i).canMove(distance, direction))
+			{
+				a.get(i).motionMove(distance, direction);
+				System.out.println("Simulator.Simple(): Sensor[" + i + "] moved");
+			}
+			prevMaxCoverage = a.get(i).getMaxCoverage();
+			a.get(i).deselect();
+			try { TimeUnit.MILLISECONDS.sleep(delay); } 
+			catch (InterruptedException e) { e.printStackTrace(); }
+			if(i == a.size()-1 && prevMaxCoverage > a.getMaxLength()) break;
 		}
-		else
-			allowOverlap = false;
+	}
+	@SuppressWarnings("unused")
+	public void Regid(Area a)
+	{
+		long delay = 200;
+		double prevMaxCoverage = 0.0;
+		double distance = 0.0; // distance that a sensor can move; to be calculated;
+		boolean allowOverlap = true;
+		boolean direction = LEFT;
+		if(a.size() == 0)
+		{
+			System.out.println("Error: EmptyArray");
+			return;
+		}
 		
 		//checking the coverage by the left most element; and removing the initial gap;
 		try { TimeUnit.MILLISECONDS.sleep(5*delay); } 
@@ -87,7 +162,8 @@ public class Simulator  implements Observer{
 			catch (InterruptedException e) { e.printStackTrace(); }
 			
 			if(a.get(i).getMinCoverage() > prevMaxCoverage-overlapAllowance){ //checking if there is a gap;
-				distance = Math.abs( a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance) );
+				distance = a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance);
+				if(distance < 0 ) distance = 0;
 				direction = LEFT;
 			}
 			if(a.get(i).getMinCoverage() < prevMaxCoverage-overlapAllowance){ //checking if there is a overlap;
@@ -104,6 +180,7 @@ public class Simulator  implements Observer{
 			a.get(i).deselect();
 			try { TimeUnit.MILLISECONDS.sleep(delay); } 
 			catch (InterruptedException e) { e.printStackTrace(); }
+			if(i == a.size()-1 && prevMaxCoverage > a.getMaxLength()) break;
 		}
 		System.out.println("Simple Coverage: " + a.size() + " Sensors with Radius of " +a.get(0).getRadius()+ ", costs "+ a.getMovingCost() + " units of distance for full coverage");
 	}
