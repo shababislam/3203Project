@@ -10,6 +10,8 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 	private double length; // calculates the length, subtracted by overlaps but not gaps;
 	private ArrayList<Sensor> path; // to keep the list of Sensors
 	public static final double maxLength = 1.0; // maximum distance of this Area that can be covered
+	private double prevOverlaps;
+	private double prevGaps;
 	
 	public Area()
 	{
@@ -18,6 +20,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 	private Area(double maxLength)
 	{
 		//this.maxLength = maxLength;
+		this.prevGaps = this.prevOverlaps = 0.0;
 		this.path = new ArrayList<Sensor>();
 	}
 	/**
@@ -59,14 +62,22 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 		return this.purelength;
 	}
 	
-	
+	public double getPreviousOverlaps(){ return this.prevOverlaps; }
+	public double getPreviousGaps(){ return this.prevGaps; }
 	public double getAreaOverlaps()
 	{
-		return 0.0;
+		double sumOL = 0.0;
+		double prevMaxCoverage = 0.0;
+		for(int i = 0; i <size(); i++)
+		{
+			if(prevMaxCoverage < get(i).getPos()){}
+		}
+		return sumOL;
 	}
 	public double getAreaGaps()
 	{
-		return 0.0;
+		double sumGP = 0.0;
+		return sumGP;
 	}
 	/**
 	 * this method calculates the the total lengths of sensors subtracted by overlaps, but not gaps
