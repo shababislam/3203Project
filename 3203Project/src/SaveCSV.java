@@ -2,12 +2,12 @@
 public class SaveCSV {
 
 
-	public String CSVHeaderGen(){
+	public static String CSVHeaderGen(){
 	 return "Initial Position,Final Position,Radius,Distance Moved,Algorithm,Initial Overlap,Final Overlap,Initial Gap,Final Gap";
 	}
 	
 	
-	public String areaCSVData(Area thisArea, String algorithm){
+	public static String areaCSVData(Area thisArea, String algorithm){
 		String initPos = "";
 		String finalPos = "";
 		String radius = "";
@@ -48,10 +48,4 @@ public class SaveCSV {
 		return '"'+initPos+'"'+','+'"'+finalPos+'"'+','+radius+','+distanceMoved+','+algorithm+','+initialOverlap+','+finalOverlap+','+initialGap+','+finalGap;
 	}
 	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
