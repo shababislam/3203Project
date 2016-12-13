@@ -59,6 +59,15 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 		return this.purelength;
 	}
 	
+	
+	public double getAreaOverlaps()
+	{
+		return 0.0;
+	}
+	public double getAreaGaps()
+	{
+		return 0.0;
+	}
 	/**
 	 * this method calculates the the total lengths of sensors subtracted by overlaps, but not gaps
 	 * it assumes there are no gaps;
