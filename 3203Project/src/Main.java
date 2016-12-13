@@ -41,6 +41,10 @@ public class Main {
         
         for(int i = 0; i< s.getMethod1().size(); i ++)
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));
+        
+        
+        System.out.println(SaveCSV.CSVHeaderGen());
+        System.out.println(SaveCSV.areaCSVData(s.getMethod1(), "Rigid",10));
 	}
 
 }

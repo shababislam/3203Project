@@ -7,7 +7,7 @@ public class SaveCSV {
 	}
 	
 	
-	public static String areaCSVData(Area thisArea, String algorithm){
+	public static String areaCSVData(Area thisArea, String algorithm, int scale){
 		String initPos = "";
 		String finalPos = "";
 		String radius = "";
@@ -18,20 +18,20 @@ public class SaveCSV {
 		String finalGap = "";
 		
 		for(int i = 0;i<thisArea.size();i++){
-			initPos+=String.valueOf(thisArea.get(i).getInitialPos())+",";
+			initPos+=String.valueOf(Sensor.round(thisArea.get(i).getInitialPos()*scale,2))+",";
 	
-			finalPos+=thisArea.get(i).getPos();				
+			finalPos+=String.valueOf(Sensor.round(thisArea.get(i).getPos()*scale,2))+",";				
 		}
 		
-		radius = String.valueOf(thisArea.get(0).getRadius());
+		radius = String.valueOf(Sensor.round(thisArea.get(0).getRadius()*scale,2));
 		
-		distanceMoved = String.valueOf(thisArea.getMovingCost());
+		distanceMoved = String.valueOf(Sensor.round(thisArea.getMovingCost()*scale,2));
 		
-		initialOverlap = String.valueOf(thisArea.getPreviousOverlaps());
-		finalOverlap = String.valueOf(thisArea.getAreaOverlaps());
+		initialOverlap = String.valueOf(Sensor.round(thisArea.getPreviousOverlaps()*scale,2));
+		finalOverlap = String.valueOf(Sensor.round(thisArea.getAreaOverlaps()*scale,2));
 		
-		initialGap = String.valueOf(thisArea.getPreviousGaps());
-		finalGap = String.valueOf(thisArea.getAreaGaps());
+		initialGap = String.valueOf(Sensor.round(thisArea.getPreviousGaps()*scale,2));
+		finalGap = String.valueOf(Sensor.round(thisArea.getAreaGaps()*scale,2));
 		
 	
 		
