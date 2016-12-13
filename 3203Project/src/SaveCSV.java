@@ -25,7 +25,7 @@ public class SaveCSV {
 	{
 	    JFileChooser chooser = new JFileChooser();
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "JPG & GIF Images", "jpg", "gif");
+	        "Comma seperated CSV", "csv");
 	    chooser.setFileFilter(filter);
 	    int returnVal = chooser.showSaveDialog(parent);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
