@@ -160,18 +160,7 @@ public class Simulator  implements Observer{
 			a.get(i).select();
 			try { TimeUnit.MILLISECONDS.sleep(delay); } 
 			catch (InterruptedException e) { e.printStackTrace(); }
-			
-			/*
-			if(a.get(i).getMinCoverage() > prevMaxCoverage){ //checking if there is a gap;
-				distance = a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance);
-				if(distance < 0 ) distance = 0;
-				direction = LEFT;
-			}
-			if(a.get(i).getMinCoverage() < prevMaxCoverage-overlapAllowance){ //checking if there is a overlap;
-				distance = Math.abs( a.get(i).getMinCoverage() - (prevMaxCoverage+overlapAllowance) );
-				direction = RIGHT;
-			}
-			*/
+
 			if(a.get(i).canMoveTo(prevMaxCoverage+a.get(i).getRadius()) )
 			{
 				a.get(i).motionMoveTo(prevMaxCoverage+a.get(i).getRadius());
