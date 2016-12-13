@@ -81,9 +81,9 @@ public class Simulator  implements Observer{
 	}
 	private void saveGapsAndOverlaps()
 	{
-		this.initialState.saveGapsAndOverlaps();
-		this.method1.saveGapsAndOverlaps();
-		this.method2.saveGapsAndOverlaps();
+		if(this.initialState!= null) this.initialState.saveGapsAndOverlaps();
+		if(this.method1!= null) this.method1.saveGapsAndOverlaps();
+		if(this.method2!= null) this.method2.saveGapsAndOverlaps();
 	}
 	public Area getMethod1(){ return this.method1; }
 	

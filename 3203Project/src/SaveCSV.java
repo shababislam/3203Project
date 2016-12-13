@@ -30,22 +30,25 @@ public class SaveCSV {
 	    int returnVal = chooser.showSaveDialog(parent);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	       System.out.println("You chose to open this file: " +
-	            chooser.getSelectedFile().getName());
+	            chooser.getSelectedFile().getPath() +
+	    		   chooser.getSelectedFile().getName());
+	       filename = chooser.getSelectedFile().getPath();
 	    }
 
 	}
 	
 	public static void addAreaCSVData(Area thisArea, String algorithm)
 	{
-		if(fileData == "") fileData = SaveCSV.CSVHeaderGen();
+		if(fileData == "" || fileData == null) fileData = SaveCSV.CSVHeaderGen();
 		fileData += SaveCSV.areaCSVData(thisArea, algorithm);
 	}
 	
 	public static boolean SaveData()
 	{
 		boolean res = true;
-		String fName = new String(filename);
-		if(!filename.toLowerCase().contains(EXTENSION)) fName += EXTENSION;
+		String fName = "output";
+		if(filename != null) fName = new String(filename);
+		if(!fName.toLowerCase().contains(EXTENSION)) fName += EXTENSION;
 		try{
 		    PrintWriter writer = new PrintWriter(fName, "UTF-8");
 		    writer.println(fileData);
