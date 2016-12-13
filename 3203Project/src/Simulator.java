@@ -43,6 +43,7 @@ public class Simulator  implements Observer{
 				this.method1.add(new Sensor(pos, i));
 			}
 		}
+		this.saveGapsAndOverlaps();
 	}
 	public Simulator(int numSensors, double radius, int scale, int unit, JFrame f)
 	{
@@ -76,6 +77,13 @@ public class Simulator  implements Observer{
 				this.method2.add(new Sensor(pos, i));
 			}
 		}
+		this.saveGapsAndOverlaps();
+	}
+	private void saveGapsAndOverlaps()
+	{
+		this.initialState.saveGapsAndOverlaps();
+		this.method1.saveGapsAndOverlaps();
+		this.method2.saveGapsAndOverlaps();
 	}
 	public Area getMethod1(){ return this.method1; }
 	

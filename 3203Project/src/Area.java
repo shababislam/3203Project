@@ -64,21 +64,51 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 	
 	public double getPreviousOverlaps(){ return this.prevOverlaps; }
 	public double getPreviousGaps(){ return this.prevGaps; }
+	/**
+	 * calculates and returns the sum of overlaps within the current coverage area
+	 * @return
+	 */
 	public double getAreaOverlaps()
 	{
 		double sumOL = 0.0;
-		double prevMaxCoverage = 0.0;
-		for(int i = 0; i <size(); i++)
+		double ol = 0;
+		for(int i = 0; i < this.size()-1; i ++) // calculating overlaps
 		{
-			if(prevMaxCoverage < get(i).getPos()){}
+			ol = this.get(i).getOverlap(this.get(i+1));
+			if(ol>=0 && ol != 2) sumOL += ol;
+			if(this.get(i).getMinCoverage() < 0) sumOL+= Math.abs(this.get(i).getMinCoverage()); // for subtracting the outside coverage
+			if(this.get(i).getMaxCoverage() > this.getMaxLength() ) sumOL+= this.getMaxLength() - this.get(i).getMaxCoverage(); // for subtracting the outside coverage
 		}
+		if(this.get(this.size()-1).getMaxCoverage() < this.getMaxLength() && this.size() > 1 ) sumOL+= this.getMaxLength() - this.get(this.size()-1).getMaxCoverage(); // for subtracting the outside coverage of very last element
+		//this.prevOverlaps = sumOL;
 		return sumOL;
 	}
+	/**
+	 * calculates and returns the sum of all gaps within the coverage area;
+	 * @return
+	 */
 	public double getAreaGaps()
 	{
 		double sumGP = 0.0;
+		//double prevMaxCoverage = 0.0;
+		double gp = 0;
+		for(int i = 0; i < this.size()-1; i ++) // calculating overlaps
+		{
+			gp = this.get(i).getOverlap(this.get(i+1));
+			if(gp>=0 && gp != 2 && gp != -1) sumGP += gp;
+			if(i == 0 && this.get(i).getMinCoverage() > 0) sumGP+= Math.abs(this.get(i).getMinCoverage()); // for subtracting the outside coverage
+			if(i == this.size()-1 && this.get(i).getMaxCoverage() < this.getMaxLength() ) sumGP+= this.getMaxLength() - this.get(i).getMaxCoverage(); // for subtracting the outside coverage
+		}
+		if(this.get(this.size()-1).getMaxCoverage() > this.getMaxLength() && this.size() > 1 ) sumGP+= this.getMaxLength() - this.get(this.size()-1).getMaxCoverage(); // for subtracting the outside coverage of very last element
+		//this.prevGaps = sumGP;
 		return sumGP;
 	}
+	public void saveGapsAndOverlaps()
+	{
+		this.prevGaps = this.getAreaGaps();
+		this.prevOverlaps = this.getAreaOverlaps();
+	}
+
 	/**
 	 * this method calculates the the total lengths of sensors subtracted by overlaps, but not gaps
 	 * it assumes there are no gaps;
