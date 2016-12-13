@@ -79,6 +79,22 @@ public class Simulator  implements Observer{
 		}
 		this.saveGapsAndOverlaps();
 	}
+	
+	/**
+	 * makes this instance of Simulator a shallow copy of the other instance s
+	 * @param s
+	 * @return this
+	 */
+	public Simulator reinstaciate(Simulator s)
+	{
+		this.frame = s.frame;
+		this.initialState = s.initialState;
+		this.method1 = s.method1;
+		this.method2 = s.method2;
+		this.saveGapsAndOverlaps();
+		return this;
+	}
+	
 	private void saveGapsAndOverlaps()
 	{
 		if(this.initialState!= null) this.initialState.saveGapsAndOverlaps();
@@ -86,6 +102,14 @@ public class Simulator  implements Observer{
 		if(this.method2!= null) this.method2.saveGapsAndOverlaps();
 	}
 	public Area getMethod1(){ return this.method1; }
+	public Area getMethod2(){ return this.method2; }
+	public Area getMethod3(){ return this.method1; }
+	public Area getInitialState(){ return this.method1; }
+	
+	public void setMethod1(Area a){ this.method1 = a; }
+	public void setMethod2(Area a){ this.method2 = a; }
+	public void setMethod3(Area a){ this.method1 = a; }
+
 	
 	@SuppressWarnings("unused")
 	public void Simple(Area a)

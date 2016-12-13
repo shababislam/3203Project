@@ -11,13 +11,13 @@ public class Main {
 		JFrame f = new JFrame("Swing Paint Demo");
         f.setSize(AreaComponent.MINWIDTH*2+40, AreaComponent.MINHEIGHT*2+40);
 		System.out.println("Frame Initialized...!");
-		Cpanel cp = new Cpanel();
 		//Simulator s = new Simulator(6, 0.11, 100, 1,f);
 		double [] sampleSensors = {0.02, 0.1, 0.36, 0.37, 0.38, 0.59};
 		Simulator s = new Simulator(sampleSensors , 0.11, 100, 1, f);
 		System.out.println("Simulator Initialized...!");
 		AreaComponent a = new AreaComponent(s.getMethod1());
 		System.out.println("AreaComponenet Initialized...!");
+		Cpanel cp = new Cpanel(f,s,a);
 		Rectangle r = new Rectangle(20,20,a.MINWIDTH*2,a.MINHEIGHT*2);
 		f.setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -42,9 +42,9 @@ public class Main {
         for(int i = 0; i< s.getMethod1().size(); i ++)
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));
         
-        SaveCSV.addAreaCSVData(s.getMethod1(), "Simple");
-        SaveCSV.setFilenameGui(f);
-        SaveCSV.SaveData();
+        //SaveCSV.addAreaCSVData(s.getMethod1(), "Simple");
+        //SaveCSV.setFilenameGui(f);
+        //SaveCSV.SaveData();
         
 	}
 

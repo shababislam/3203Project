@@ -26,8 +26,6 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 	{
 		super();
 		this.setLayout(null);
-		this.area = area;
-		this.area.addObserver(this);
 		this.resetSize();
 		Rectangle bounds = this.getBounds();
 		AreaComponent.gap = (int) (bounds.width * 0.1); // setting the gap to 10% of the width
@@ -37,19 +35,36 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 		this.addComponentListener(ruler);
 		//this.ruler.addComponentListener(this);
 		//System.out.println("AreaComponenet(): " + "this.area.size: " + this.area.size());
+		this.setArea(area);
 		bounds.width = 1000;
 		bounds.height = 200;
 		this.MaxHeight = bounds.height;
 		this.setBounds(bounds);
 		this.revalidate();
-		this.repaint();
+		this.repaint();		
+	} 
+	public void setArea(Area area)
+	{
+		if (this.area != null)
+		{
+			this.area.deleteObserver(this);
+			for (int i = 0; i < this.getComponentCount(); i++)
+				if(this.getComponent(i) instanceof SensorComponent)
+				{
+					this.remove(this.getComponent(i));
+					this.removeComponentListener((ComponentListener)this.getComponent(i));
+				}
+		}
+		this.area = area;
+		this.area.addObserver(this);
 		for(int i = 0; i < this.area.size(); i++){
 			this.add(this.area.get(i).generateComponent(this.ruler));
 			this.addComponentListener((ComponentListener) this.area.get(i).getComponent());
 			System.out.println("AreaComponenet(): [" + i + "] " + this.area.get(i).getComponent());
 		}
-		
-	} 
+
+
+	}
 	
 	public void addNotify()
 	{

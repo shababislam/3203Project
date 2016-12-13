@@ -12,6 +12,8 @@ public class Cpanel extends JComponent {
 	 */
 	private static final long serialVersionUID = -2085047586268860629L;
 	public JFrame frame; // reference to parent frame
+	public Simulator simulator;
+	public AreaComponent area;
 	public GridLayout layout;
 	public JButton btnInitiate; // to construct a simulator object
 	public JButton btnReset; // to reset back to initialized state of the simulator
@@ -23,7 +25,7 @@ public class Cpanel extends JComponent {
 	public JLabel lblSensorRadius;
 	public JTextField txtNumSensors;
 	public JTextField txtSensorRadius;
-	
+	public static CPanelActions actions;
 	public Cpanel()
 	{
 		// initializing and setting the layout manager
@@ -57,8 +59,22 @@ public class Cpanel extends JComponent {
 		this.add(this.btnNewRun);
 		this.add(this.btnRandReset);
 		this.add(this.btnReset);
-		// 
+	}
+	
+	public Cpanel(JFrame f, Simulator s, AreaComponent a)
+	{
+		this();
+		this.frame = f;
+		this.simulator = s;
+		this.area = a;
+		// setting the actionListeners
+		Cpanel.actions = new CPanelActions(this, s,a);
+		for(int i = 0; i < this.getComponentCount(); i ++)
+			if(this.getComponent(i) instanceof JButton)
+				((JButton)this.getComponent(i)).addActionListener(actions);
+		
 		
 	}
+	
 
 }
