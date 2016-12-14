@@ -24,7 +24,7 @@ public class SensorComponent extends JComponent implements Observer,ComponentLis
 	private Ruler ruler;
 	private int pxRadius, centerDiameter, centerX, centerY, prefWidth, prefHeight;
 	//private Component parent;
-	
+	  
 	private SensorComponent(){super();}
 	public SensorComponent(Sensor s)
 	{ this(s,null); }

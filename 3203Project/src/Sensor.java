@@ -246,7 +246,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		return pos>= 0.0 && pos <= 1.0;
 	}
 	public boolean motionMoveTo(double pos)
-	{
+	{  
 		double distance  = this.getPos() - pos;
 		boolean direction  = LEFT;
 		if(distance < 0) direction  = RIGHT;

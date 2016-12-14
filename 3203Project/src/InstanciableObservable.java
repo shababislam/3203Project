@@ -6,7 +6,7 @@ import java.util.Observable;
  */
 public class InstanciableObservable extends Observable {
 	
-	public InstanciableObservable()
+	public InstanciableObservable()  
 	{
 		super();
 	}

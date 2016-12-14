@@ -13,7 +13,7 @@ public class SaveCSV {
 	private static final char NL = '\n';
 	
 	public SaveCSV(){ SaveCSV.filename = "outputData";  this.fileData = "";}
-
+  
 	public static void setFilename(String file)
 	{
 		if(file.toLowerCase().contains(EXTENSION)) file.toLowerCase().replaceAll(EXTENSION, "");

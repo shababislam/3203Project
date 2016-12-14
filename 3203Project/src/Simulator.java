@@ -106,7 +106,7 @@ public class Simulator  implements Observer{
 		this.method3.addObserver(this);
 		return this;
 	}
-	
+	  
 	private void saveGapsAndOverlaps()
 	{
 		if(this.initialState!= null) this.initialState.saveGapsAndOverlaps();
