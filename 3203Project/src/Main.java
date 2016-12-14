@@ -11,7 +11,7 @@ public class Main {
 		JFrame f = new JFrame("Swing Paint Demo");
         f.setSize(AreaComponent.MINWIDTH*2+40, AreaComponent.MINHEIGHT*2+40);
 		System.out.println("Frame Initialized...!");
-		Simulator s = new Simulator(6, 0.11, 100, 1,f);
+		Simulator s = new Simulator(5, 0.11, 100, 1,f);
 		//double [] sampleSensors = {0.02, 0.1, 0.36, 0.37, 0.38, 0.59};
 		//Simulator s = new Simulator(sampleSensors , 0.11, 100, 1, f);
 		System.out.println("Simulator Initialized...!");
@@ -40,7 +40,8 @@ public class Main {
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));
 
         //s.run();
-        //s.Simple(s.getMethod1());
+        s.Simple(s.getMethod1());
+        s.Regid(s.getMethod2());
         System.out.println("Simulation is done!");
         
         for(int i = 0; i< s.getMethod1().size(); i ++)

@@ -138,14 +138,6 @@ public class Simulator  implements Observer{
 			System.out.println("Error: EmptyArray");
 			return;
 		}
-//		if(a.getPureLength() > 1)
-//		{
-//			allowOverlap = true;
-//			overlapAllowance = ( (1.0 - a.getPureLength() )/a.size()) /2;
-//		}
-//		else
-//			allowOverlap = false;
-		
 		//checking the coverage by the left most element; and removing the initial gap;
 		try { TimeUnit.MILLISECONDS.sleep(5*delay); } 
 		catch (InterruptedException e) { e.printStackTrace(); }
