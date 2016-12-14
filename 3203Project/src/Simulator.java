@@ -93,7 +93,7 @@ public class Simulator  implements Observer{
 	 * @return this
 	 */
 	public Simulator reinstaciate(Simulator s)
-	{
+	{ 
 		this.frame = s.frame;
 		this.initialState = s.initialState;
 		this.method1 = s.method1;
