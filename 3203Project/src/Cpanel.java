@@ -62,7 +62,7 @@ public class Cpanel extends JComponent {
 	}
 	
 	public Cpanel(JFrame f, Simulator s){ this(f,s,null); }
-	public Cpanel(JFrame f, Simulator s, AreaComponent a) 
+	public Cpanel(JFrame f, Simulator s, AreaComponent a)
 	{
 		this();
 		this.frame = f;

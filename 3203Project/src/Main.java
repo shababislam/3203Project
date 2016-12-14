@@ -40,7 +40,7 @@ public class Main {
         	System.out.println("Sensor[" + i + "] : " + s.getMethod1().get(i));
 
         //s.run();
-        s.Simple(s.getMethod1()); 
+        s.Simple(s.getMethod1());  
         s.Regid(s.getMethod2());
         System.out.println("Simulation is done!");
         

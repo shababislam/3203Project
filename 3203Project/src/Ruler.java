@@ -29,7 +29,7 @@ public class Ruler extends JComponent implements ComponentListener {
 	private Ruler(){this(50, 800); }
 	public Ruler(int gap, int width){ this(gap, width, 20, 100); }
 	public Ruler(int gap, int width, int height, int scale) throws IllegalArgumentException
-	{ 
+	{  
 		super();
 		if(gap < 10) throw new IllegalArgumentException("Value of Gap has to be at least 10 Pixels, " + gap + " is too Small");
 		this.GapBeforeInPixels = gap;

@@ -63,7 +63,7 @@ public class CPanelActions implements ActionListener {
 	public void rigid()
 	{
 		System.out.println("Rigid Algorithm Clicked");
-		this.simulator.Regid(this.simulator.getMethod2()); 
+		this.simulator.Regid(this.simulator.getMethod2());  
 
 	}
 	

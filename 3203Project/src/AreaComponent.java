@@ -127,7 +127,7 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 			}
 		}
 	}
-	@Override 
+	@Override
 	public void componentHidden(ComponentEvent e) {
 		// TODO Auto-generated method stub
 		
