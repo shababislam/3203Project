@@ -250,7 +250,8 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 		double distance  = this.getPos() - pos;
 		boolean direction  = LEFT;
 		if(distance < 0) direction  = RIGHT;
-		return motionMove(distance, direction);
+		System.out.println("Sensor.motionMoveTo(): pos: "+ this.getPos() + " dest: " + pos + " ToLeft: " + direction);
+		return motionMove(Math.abs(distance), direction);
 		
 	}
 	public boolean motionMove(double distance, boolean left)
