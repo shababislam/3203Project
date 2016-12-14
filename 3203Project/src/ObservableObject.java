@@ -14,5 +14,5 @@ public class ObservableObject {
 		this.parent = parent;
 		this.object = object;
 		this.message = message;
-	}
+	} 
 }

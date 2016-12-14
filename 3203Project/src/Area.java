@@ -39,7 +39,7 @@ public class Area extends Observable implements Set<Sensor>, Observer {
 	 */
 	public double getMaxLength() { return Area.maxLength; }
 	public void sort()
-	{
+	{ 
 		Sensor temp;
 		for(int i  = 0; i < path.size(); i ++)
 			for(int j  = 0; j < path.size(); j ++)
