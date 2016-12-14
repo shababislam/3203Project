@@ -36,9 +36,9 @@ public class Cpanel extends JComponent {
 		this.layout = new GridLayout(rows,cols, spacing,spacing);
 		this.setLayout(this.layout);
 		// initializing the layout components
-		this.btnInitiate = new JButton("Initialize");
-		this.btnReset = new JButton("Reset");
-		this.btnRandReset = new JButton("Random Reset");
+		this.btnInitiate = new JButton("Initialize"); this.btnInitiate.setEnabled(false); // disabling the unnecessary buttons
+		this.btnReset = new JButton("Reset"); this.btnReset.setEnabled(false);
+		this.btnRandReset = new JButton("Random Reset"); this.btnRandReset.setEnabled(false);
 		this.btnSimpleRun = new JButton("Simple Algorithm");
 		this.btnRigidRun = new JButton("Rigid Algorithm");
 		this.btnNewRun = new JButton("Our New Algorithm");
@@ -61,6 +61,7 @@ public class Cpanel extends JComponent {
 		this.add(this.btnReset);
 	}
 	
+	public Cpanel(JFrame f, Simulator s){ this(f,s,null); }
 	public Cpanel(JFrame f, Simulator s, AreaComponent a)
 	{
 		this();
