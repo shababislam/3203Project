@@ -9,7 +9,9 @@ public class Simulator  implements Observer{
 	public static final boolean LEFT = true;
 	public static final boolean RIGHT = false;
 	private JFrame frame; // for updating gui if valid;
-	private Area initialState, method1,method2;
+	private Area initialState, method1,method2, method3;
+	private int numTrys; // for rare ocasions that simulator cannot land sesnors into the areas;
+	public static final int MAXTRYS = 25;
 	public Simulator()
 	{
 		this(100, 5, 100, 1, null);
@@ -43,6 +45,7 @@ public class Simulator  implements Observer{
 				this.method1.add(new Sensor(pos, i));
 			}
 		}
+		this.saveGapsAndOverlaps();
 	}
 	public Simulator(int numSensors, double radius, int scale, int unit, JFrame f)
 	{
@@ -52,6 +55,8 @@ public class Simulator  implements Observer{
 		this.method1.addObserver(this);
 		this.method2 = new Area();
 		this.method2.addObserver(this);
+		this.method3 = new Area();
+		this.method3.addObserver(this);
 		double pos = 0;
 		boolean added  = false;
 		Random r = new Random();
@@ -64,7 +69,9 @@ public class Simulator  implements Observer{
 
 		for(int i  = 0; i < numSensors; i ++){
 			added = false;
-			while(!added && !initialState.isFull()){
+			this.numTrys = 0;
+				while(!added && !initialState.isFull() && this.numTrys <= MAXTRYS){
+				this.numTrys++;
 				pos = r.nextFloat();
 				s = new Sensor(pos, i);
 				System.out.println("Simulator Object: new Position is: " + pos + " == " + s.getPos());
@@ -74,10 +81,48 @@ public class Simulator  implements Observer{
 				// making 3 copies for separate simulations;
 				this.method1.add(new Sensor(pos, i));
 				this.method2.add(new Sensor(pos, i));
+				this.method3.add(new Sensor(pos, i));
 			}
 		}
+		this.saveGapsAndOverlaps();
+	}
+	
+	/**
+	 * makes this instance of Simulator a shallow copy of the other instance s
+	 * @param s
+	 * @return this
+	 */
+	public Simulator reinstaciate(Simulator s)
+	{
+		this.frame = s.frame;
+		this.initialState = s.initialState;
+		this.method1 = s.method1;
+		this.method2 = s.method2;
+		this.method3 = s.method3;
+		this.saveGapsAndOverlaps();
+		this.initialState.addObserver(this);
+		this.method1.addObserver(this);
+		this.method2.addObserver(this);
+		this.method3.addObserver(this);
+		return this;
+	}
+	
+	private void saveGapsAndOverlaps()
+	{
+		if(this.initialState!= null) this.initialState.saveGapsAndOverlaps();
+		if(this.method1!= null) this.method1.saveGapsAndOverlaps();
+		if(this.method2!= null) this.method2.saveGapsAndOverlaps();
+		if(this.method3!= null) this.method3.saveGapsAndOverlaps();
 	}
 	public Area getMethod1(){ return this.method1; }
+	public Area getMethod2(){ return this.method2; }
+	public Area getMethod3(){ return this.method3; }
+	public Area getInitialState(){ return this.method1; }
+	
+	public void setMethod1(Area a){ this.method1 = a; }
+	public void setMethod2(Area a){ this.method2 = a; }
+	public void setMethod3(Area a){ this.method3 = a; }
+
 	
 	@SuppressWarnings("unused")
 	public void Simple(Area a)
@@ -93,14 +138,6 @@ public class Simulator  implements Observer{
 			System.out.println("Error: EmptyArray");
 			return;
 		}
-//		if(a.getPureLength() > 1)
-//		{
-//			allowOverlap = true;
-//			overlapAllowance = ( (1.0 - a.getPureLength() )/a.size()) /2;
-//		}
-//		else
-//			allowOverlap = false;
-		
 		//checking the coverage by the left most element; and removing the initial gap;
 		try { TimeUnit.MILLISECONDS.sleep(5*delay); } 
 		catch (InterruptedException e) { e.printStackTrace(); }

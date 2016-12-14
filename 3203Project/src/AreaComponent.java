@@ -21,7 +21,9 @@ public class AreaComponent extends JComponent implements Observer, ComponentList
 	private int unitInPixels;
 	private static int gap = 50;
 	private int MaxHeight;
-	public AreaComponent(){}
+	public AreaComponent(){
+		this(new Area());
+	}
 	public AreaComponent(Area area)
 	{
 		super();

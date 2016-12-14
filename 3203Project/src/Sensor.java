@@ -163,7 +163,7 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 	 */
 	public boolean overlaps(Sensor other)
 	{
-		if(this.getOverlap(other) < 0) return false;
+		if(this.getOverlap(other) < 0 || this.getOverlap(other) == 2) return false;
 		return true;
 	}
 	/**
@@ -207,7 +207,16 @@ public class Sensor extends Observable implements Comparable<Sensor>, Cloneable{
 			return Math.abs(this.getMaxCoverage() - other.getMinCoverage());
 		if(this.compareTo(other) > 0)
 			return Math.abs(this.getMinCoverage() - other.getMaxCoverage());
-	return -1;
+		return -1;
+	}
+	public double getGap(Sensor other)
+	{
+		if(this.reaches(other)) return 2;
+		if(this.compareTo(other) < 0)
+			return Math.abs(this.getMaxCoverage() - other.getMinCoverage());
+		if(this.compareTo(other) > 0)
+			return Math.abs(this.getMinCoverage() - other.getMaxCoverage());
+		return -1;
 
 	}
 	// Unnecessary after implementation of updateObservers
