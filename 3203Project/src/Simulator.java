@@ -93,7 +93,7 @@ public class Simulator  implements Observer{
 	 * @return this
 	 */
 	public Simulator reinstaciate(Simulator s)
-	{
+	{ 
 		this.frame = s.frame;
 		this.initialState = s.initialState;
 		this.method1 = s.method1;
@@ -124,8 +124,10 @@ public class Simulator  implements Observer{
 	public void setMethod3(Area a){ this.method3 = a; }
 
 	
+	public void Simple(Area a){this.Simple(a, true);}
+	public void Regid(Area a){this.Regid(a, true);}
 	@SuppressWarnings("unused")
-	public void Simple(Area a)
+	public void Simple(Area a, boolean motion)
 	{
 		long delay = 200;
 		double prevMaxCoverage = 0.0;
@@ -163,7 +165,8 @@ public class Simulator  implements Observer{
 
 			if(a.get(i).canMove(distance, direction))
 			{
-				a.get(i).motionMove(distance, direction);
+				if(motion) a.get(i).motionMove(distance, direction);
+				else a.get(i).move(distance, direction);
 				System.out.println("Simulator.Simple(): Sensor[" + i + "] moved");
 			}
 			prevMaxCoverage = a.get(i).getMaxCoverage();
@@ -174,7 +177,7 @@ public class Simulator  implements Observer{
 		}
 	}
 	@SuppressWarnings("unused")
-	public void Regid(Area a)
+	public void Regid(Area a, boolean motion)
 	{
 		long delay = 200;
 		double prevMaxCoverage = 0.0;
@@ -200,7 +203,8 @@ public class Simulator  implements Observer{
 
 			if(a.get(i).canMoveTo(prevMaxCoverage+a.get(i).getRadius()) )
 			{
-				a.get(i).motionMoveTo(prevMaxCoverage+a.get(i).getRadius());
+				if(motion) a.get(i).motionMoveTo(prevMaxCoverage+a.get(i).getRadius());
+				else a.get(i).setPos(prevMaxCoverage+a.get(i).getRadius());
 				System.out.println("Simulator.Rigid(): Sensor[" + i + "] moved");
 			}
 			prevMaxCoverage = a.get(i).getMaxCoverage();
